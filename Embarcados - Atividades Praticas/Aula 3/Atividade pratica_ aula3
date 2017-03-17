@@ -262,6 +262,157 @@ int num_caracs(char *string)
 }
 
 
+-->Protótipo
+int num_caracs(char *string);
+
+-->Comando
+gcc -c q8.c
+
+
+
+
+9. Re-utilize o objeto criado na questão 8 para criar um código que imprime cada argumento de entrada e a quantidade de caracteres de cada um desses argumentos. Por exemplo, considerando que o código criado recebeu o nome de 'ola_num_caracs_1':
+	$ ./ola_num_caracs_1 Eu Mesmo
+	$ Argumento: ./ola_num_caracs_1 / Numero de caracteres: 18
+	$ Argumento: Eu / Numero de caracteres: 2
+	$ Argumento: Mesmo / Numero de caracteres: 5
+	$
+
+-->Código principal
+
+#include<stdio.h>
+#include "num_caracs.h"
+
+int main (int argc, char *argv[])
+{
+	int i;
+	i=0;
+	
+
+		while (i< argc)
+	{
+		printf("%s ",argv [i]);
+		printf("Possui %d caracteres", num_caracs(argv[i]));
+		i++;
+	}
+
+	printf("\n");
+
+	return 0;
+}
+
+--> Código secundário:
+
+#include<stdio.h>
+#include "num_caracs.h"
+
+int num_caracs(char *string)
+{
+	int i=0;
+	
+	while (string[i] != '\0')
+	{
+		i=i+1;
+	}
+	
+
+	return i;
+}
+
+
+--> Função
+
+int num_caracs(char *string);
+
+--> Comandos
+
+gcc -o q9.c
+
+gcc -o ola_num_caracs1 q9.o num_caracs.o
+
+./ola_num_caracs1 ______
+
+
+10. Crie um Makefile para a questão anterior.
+
+-->Código
+
+ola_num: q9.o num_caracs.o
+	gcc $(CFLAGS) -o ola_num q9.o ola_num.o
+q9.o: q9.c num_caracs.h
+	gcc $(CFLAGS) -c q9.c
+num_caracs.o: num_caracs.c num_caracs.h
+	g++ $(CFLAGS) -c num_caracs.c
+clean:
+	rm -f *.o num_caracs
+
+
+-->Comando 
+
+make
+./num_caracs ____
+
+
+11. Re-utilize o objeto criado na questão 8 para criar um código que imprime o total de caracteres nos argumentos de entrada. Por exemplo, considerando que o código criado recebeu o nome de 'ola_num_caracs_2':
+	$ ./ola_num_caracs_2 Eu Mesmo
+	$ Total de caracteres de entrada: 25
+	$
+
+
+
+--> Código
+
+#include<stdio.h>
+#include "num_caracs.h"
+
+int main (int argc, char *argv[])
+{
+	int i,t;
+	i=0;
+	t=0;
+
+		while (i< argc)
+	{
+		
+		t+= num_caracs(argv[i]);
+		i++;
+	}
+
+	printf("Total de caracteres de entrada: %d.\n", t);
+
+	return 0;
+}
+
+-->Comando
+
+gcc -o q11.c
+
+gcc -o ola_num_caracs1 q11.o num_caracs.o
+
+./ola_num_caracs2 ______
+
+
+
+12. Crie um Makefile para a questão anterior.
+
+--> Código
+
+ola_num: q11.o num_caracs.o
+	gcc $(CFLAGS) -o ola_num q11.o ola_num.o
+q11.o: q11.c num_caracs.h
+	gcc $(CFLAGS) -c q11.c
+num_caracs.o: num_caracs.c num_caracs.h
+	g++ $(CFLAGS) -c num_caracs.c
+clean:
+	rm -f *.o num_caracs
+
+
+-->Comando
+
+make
+
+
+
 
 
 
