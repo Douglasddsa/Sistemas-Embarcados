@@ -87,7 +87,7 @@ $ echo Eu Mesmo | ./ola_usuario_1
 (e) Se é usado um pipe com mais de um nome entre parênteses. Por exemplo:
 $ echo (Eu Mesmo) | ./ola_usuario_1
 
---> O programa reconheu não reconheceu o comando.
+--> O programa apenas recunheceu a primeira aspa dupla e a string 'Eu'.
 
 
 (f) Se é usado o redirecionamento de arquivo. Por exemplo:
