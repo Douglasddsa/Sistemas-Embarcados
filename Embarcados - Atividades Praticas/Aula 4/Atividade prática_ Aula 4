@@ -1,0 +1,228 @@
+Universidade de Brasília
+Aluno: Douglas da Silveira Alves		Matrícula: 13/0024881
+Data: 21/02/17
+
+
+			Atividade prática - Aula 4
+
+1. Crie um código em C para escrever "Ola mundo!" em um arquivo chamado 'ola_mundo.txt'.
+
+-->Código
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main (){
+	
+	FILE *fp;
+	char string[]="Ola mundo!";
+	int i;
+	
+	fp= fopen("ola_mundo.txt","w");
+	if (! fp)
+	{
+		printf("Erro na abertura do arquivo\n");
+		exit(0);
+	}
+	
+	for(i=0; string[i]!='\0';i++)
+	{
+		putc (string[i],fp);
+	}
+	
+	printf("\n");
+	fclose(fp);
+	return 0;
+
+}
+
+-->Comando
+gcc q1.c -o hello
+./hello
+
+
+2. Crie um código em C que pergunta ao usuário seu nome e sua idade, e escreve este conteúdo em um arquivo com o seu nome e extensão '.txt'. Por exemplo, considerando que o código criado recebeu o nome de 'ola_usuario_1':
+	$ ./ola_usuario_1
+	$ Digite o seu nome: Eu
+	$ Digite a sua idade: 30
+	$ cat Eu.txt
+	$ Nome: Eu
+	$ Idade: 30 anos
+	$
+
+
+-->Código
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int main (){
+	
+	FILE *fp;
+	char str1[100];
+	int id;
+	
+	fp= fopen("Eu.txt","w");
+	if (! fp)
+	{
+		printf("Erro na abertura do arquivo\n");
+		exit(1);
+	}
+	
+	printf("Digite seu nome:");
+	scanf(" %s", str1);
+	
+	printf("Digite seu idade:");
+	scanf("%d", &id);
+	
+	fprintf(fp,"Nome: %s.\nIdade: %d.\n", str1, id);
+
+	fclose (fp);
+
+	return 0;
+
+}
+
+
+-->Comando
+
+gcc q2.c -o ola_usuario_1
+./ola_usuario_1 _______   ____
+cat Eu.txt
+
+
+3. Crie um código em C que recebe o nome do usuário e e sua idade como argumentos de entrada (usando as variáveis argc e *argv[]), e escreve este conteúdo em um arquivo com o seu nome e extensão '.txt'. Por exemplo, considerando que o código criado recebeu o nome de 'ola_usuario_2':
+	$ ./ola_usuario_2 Eu 30
+	$ cat Eu.txt
+	$ Nome: Eu
+	$ Idade: 30 anos
+	$
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main (int argc, char *argv[]){
+	
+	FILE *fp;
+	char nome[]="Nome: ";
+	char str1[100];
+	char idade[]="Idade: ";
+	int i,t;	
+
+	fp= fopen("Eu2.txt","w");
+	if (! fp)
+	{
+		printf("Erro na abertura do arquivo\n");
+		exit(-1);
+	}
+	
+	
+
+	strcat (nome, argv[1]);
+	strcat (idade, argv[2]);
+	strcat (idade, " anos.\n");
+	fputs(nome, fp);
+	putc('\n', fp);
+	fputs(idade,fp);
+
+	fclose (fp);
+
+	return 0;
+
+}
+
+
+-->Comando
+
+gcc q3.c -o ola_usuario_2
+./ola_usuario_2 Eu 21
+cat Eu2.txt
+
+
+4. Crie uma função que retorna o tamanho de um arquivo, usando o seguinte protótipo:
+
+	int tam_arq_texto(char *nome_arquivo);
+
+Salve esta função em um arquivo separado chamado 'bib_arqs.c'. Salve o protótipo em um arquivo chamado 'bib_arqs.h'. Compile 'bib_arqs.c' para gerar o objeto 'bib_arqs.o'.
+
+-->Código
+
+#include <stdio.h>
+#include <stdlib.h>
+
+int tam_arq_texto (char *nome_arquivo){
+	
+	FILE *arquivo;
+	long tamanho;
+	
+	arquivo= fopen(nome_arquivo, "r");
+
+		
+	if(arquivo != NULL)
+	{
+		fseek (arquivo, 0, SEEK_END);
+		tamanho= ftell(arquivo);
+
+	printf("O arquivo %s possui %ld bytes.\n", nome_arquivo, tamanho);
+	}
+
+	else
+	{	
+		printf("Arquivo não existe.\n");
+	}
+	
+	fclose(arquivo);	
+	return tamanho;
+}
+
+-->Código secundário
+
+int tam_arq_texto (char *nome_arquivo)
+
+
+--> Comando
+
+gcc -o q4.c
+
+
+
+5. Crie uma função que lê o conteúdo de um arquivo-texto e o guarda em uma string, usando o seguinte protótipo:
+
+	void le_arq_texto(char *nome_arquivo, char *conteúdo);
+
+-->Código
+
+#include <stdlib.h>
+
+void le_arq_texto (char *nome_arquivo, char *conteudo){
+	
+	FILE *arquivo2;
+	int i;
+	char p;
+	
+	arquivo2= fopen(nome_arquivo, "r");
+
+		
+	if(!arquivo2)
+	{
+
+	printf("O arquivo não pode ser aberto.\n);
+	}
+
+	while((p=getc(arquivo2)) != '\0')
+	{		
+		conteudo[i]=p;
+		i++;
+	}
+
+	fclose(arquivo2);
+	return 0;
+}
+
+
+
+
+
+
