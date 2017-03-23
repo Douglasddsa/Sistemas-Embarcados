@@ -394,11 +394,18 @@ gcc ./cat_falsificado 'nome do arquivo'
 	$ 'Ola' ocorre 2 vezes no arquivo 'ola.txt'.
 	$
 	
---> Código
+--> Código (Função)
 
 #include <stdio.h>
 #include <stdlib.h>
 #include "bib_arqs.h"
+
+enum boolean {
+	true=1,
+	false=0
+};
+
+typedef enum boolean bool;
 
 void le_arq_texto (char * nome_arquivo, char *palavra){
 	
@@ -440,3 +447,22 @@ void le_arq_texto (char * nome_arquivo, char *palavra){
 
 }
 	
+--> Código (Arquivo.h)
+void le_arq_texto (char *nome_arquivo, char *palavra);
+
+-->Código para acessar a função:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "arqs.h"
+
+int main(char *argc, char argv[]){
+	
+
+	le_arq_texto(argv[1], argc[2]);
+
+	return 0;
+	
+}
+
+
