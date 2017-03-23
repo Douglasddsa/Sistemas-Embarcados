@@ -388,3 +388,55 @@ gcc -o cat_falsificado q6.o bib_arqs.o
 gcc ./cat_falsificado 'nome do arquivo'
 
 
+7. Crie um código em C que conta a ocorrência de uma palavra-chave em um arquivo-texto, e escreve o resultado no terminal. Reaproveite as funções já criadas nas questões anteriores. Por exemplo, considerando que o código criado recebeu o nome de 'busca_e_conta':
+	$ echo Ola mundo cruel! Ola universo ingrato! > ola.txt
+	$ ./busca_e_conta Ola ola.txt
+	$ 'Ola' ocorre 2 vezes no arquivo 'ola.txt'.
+	$
+	
+--> Código
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "bib_arqs.h"
+
+void le_arq_texto (char * nome_arquivo, char *palavra){
+	
+	FILE *arquivo3;
+	int i=0, cont=0;
+	char p;	
+	bool flag;
+
+	arquivo3= fopen(nome_arquivo, "r");
+
+		
+	if(!arquivo3)
+	{
+
+		printf("O arquivo não pode ser aberto.\n");
+		exit(-1);
+	}
+
+	else 
+		while(!feof(arquivo3))
+		{
+			for (i= 0; (i<sizeof(palavra) / sizeof(palavra[0])); ++i){
+
+			p= getc(arquivo3);
+
+			if(p != palavra[i]){
+			flag = true;
+			break;
+			}
+
+		}
+
+		if (flag ==false)
+		++ cont;
+
+		}
+
+	fclose(arquivo3);
+
+}
+	
