@@ -1,0 +1,49 @@
+Universidade de Brasília
+Aluno: Douglas da Silveira Alves		Matrícula: 13/0024881
+data: 22/03/17
+
+
+			Atividade Teórica - Aula 5
+
+1. Considerando a biblioteca-padrão da linguagem C, responda:
+	(a) Quais são as funções (e seus protótipos) para abrir e fechar arquivos?
+	Para abrir: fopen
+	Para fechar: fclose
+
+	(b) Quais são as funções (e seus protótipos) para escrever em arquivos?
+	Para escrever: fwrite, fprintf, puts;
+	
+	(c) Quais são as funções (e seus protótipos) para ler arquivos?
+	Para ler: fscanf, fgets
+
+	(d) Quais são as funções (e seus protótipos) para reposicionar um ponteiro para arquivo?
+	Para reposicionar: fseek, rewind
+
+(e) Quais bibliotecas devem ser incluídas no código para poder utilizar as funções acima?
+	stdio.h
+
+
+
+2. O que é a norma POSIX?
+
+POSIX (Portable Operating System Interface)É um conjunto de instruções definidadas pela IEEE para estabelecer compatibilidade entre sistemas operacionais. A norma define a interface de programação de aplicação, assim como as shells de linhas de comando e interface utilitária.
+
+3. Considerando a norma POSIX, responda:
+	(a) Quais são as funções (e seus protótipos) para abrir e fechar arquivos?
+	Para abrir: open
+	Para fechar: close
+	(b) Quais são as funções (e seus protótipos) para escrever em arquivos?
+	Para escrever: write
+	(c) Quais são as funções (e seus protótipos) para ler arquivos?
+	Para ler: read
+	(d) Quais são as funções (e seus protótipos) para reposicionar um ponteiro para arquivo?
+	Para reposicionar: lseek
+
+(e) Quais bibliotecas devem ser incluídas no código para poder utilizar as funções acima?
+	#include <stdio.h>	// Para a funcao printf()
+	#include <fcntl.h>	// Para a funcao open()
+	#include <unistd.h>	// Para a funcao close()
+	#include <stdlib.h>	// Para a função exit()
+
+
+
