@@ -1,0 +1,109 @@
+Universidade de Brasília
+Aluno: Douglas da Silveira Alves 	Matrícula: 130024881
+Data: 28/03/2017
+
+
+		Atividade Prática - Aula 6
+
+
+1. Crie um código em C para gerar três processos-filho usando o fork().
+
+-->Código:
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+int main(){
+
+	pid_t pr1;
+	pid_t pr2;
+	pid_t pr3;
+	int i;
+
+	
+	pr1= fork();
+	pr2= fork();
+	pr3= fork();
+
+	if (pr1 ==0){
+	printf("ID DO PROCESSO FILHO 1 EH %d \n", getpid());
+	
+	_exit (0);
+
+	}
+	else if(pr2==0){
+			printf("ID DO PROCESSO FILHO 2 EH %d \n", getpid());
+			sleep(2);
+			_exit (0);
+		}
+
+		else if(pr3 == 0){
+			printf("ID DO PROCESSO FILHO 3 EH %d \n", getpid());
+			_exit(0);		
+					
+		}
+
+		else{
+			
+			printf("Processo pai. Código: %d\n", getpid());
+			}
+
+	
+
+	return 0;
+}
+
+
+
+2. Crie um código em C que recebe o nome de diversos comandos pelos argumentos de entrada (argc e *argv[]), e executa cada um sequencialmente usando system(). Por exemplo, considerando que o código criado recebeu o nome de 'serial_system', e que ele foi executado na pasta '/Sistemas_Embarcados/Code/Aula_06', que contem diversos arquivos:
+	$ ./serial_system pwd echo ls echo cal
+	$ ~/Sistemas_Embarcados/Code/Aula_06
+	$
+	$ Ex1.c    Ex2b.c   Ex4.c   Ex6.c
+	$ Ex2a.c   Ex3.c    Ex5.c   serial_system
+	$
+	$     Março 2017
+	$ Do Se Te Qu Qu Se Sá
+	$           1  2  3  4
+	$  5  6  7  8  9 10 11
+	$ 12 13 14 15 16 17 18
+	$ 19 20 21 22 23 24 25
+	$ 26 27 28 29 30 31
+	$
+
+-->Codigo:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+
+void func(char *comand){
+
+	system(comand);
+	
+}
+
+int main(int argc, char *argv[]){
+
+	char string[100];
+	int i;
+		
+	for(i=1; i< argc; i++){
+	
+		func (argv[i]);
+	}
+
+
+	return 0;
+}
+
+
+
+
+
+
+
+
