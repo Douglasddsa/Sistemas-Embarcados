@@ -1,0 +1,62 @@
+Universidade de Brasília
+Aluno: Douglas da Silveira Alves 	Matrícula: 130024881
+Data: 28/03/2017
+
+
+		Atividade Teórica - Aula 6
+
+
+1. Como se utiliza o comando 'ps' para:
+	(a) Mostrar todos os processos rodando na máquina?
+	Comando: ps -a
+
+	(b) Mostrar os processos de um usuário?
+	Comando: ps -u
+
+	(c) Ordenar todos os processos de acordo com o uso da CPU?
+	Comando: ps aux --sort= -pcpu
+	(d) Mostrar a quanto tempo cada processo está rodando?
+	Comando: ps -e -o pid, user etime
+
+2. De onde vem o nome fork()?
+Vem da tradução de bifurcação ou ramificação, onde inicia-se uma parte do código independente dentro de um projeto já existente.
+
+
+3. Quais são as vantagens e desvantagens em utilizar:
+	(a) system()?
+	Vantagem: retorna a saida direto na sheel do terminal;
+	Desvantagem: Depende do desenvolvedor, além de apresentar algumas brechas de execução.
+
+	
+	(b) fork() e exec()?
+	Vantagem: Permite a criação de um projeto que funciona como cópia do projetoatual e permite a substituição desse projeto por um novo programa.
+	Desvatagem: necessita-se conhecer bem as funções de modo a permitir o acesso destes a recursos e outros processos.
+
+
+4. É possível utilizar o exec() sem executar o fork() antes?
+Não, pois necessita-se criar o projeto filho para que os processos principal e secundário funicionem entre si.
+
+5. Quais são as características básicas das seguintes funções:
+	(a) execp()?
+	Permite que o nome ou programa esteja no mesmo path.
+		
+	(b) execv()?
+	Permite a listagem de argumentos do projeto como nulas.
+	
+
+	(c) exece()?
+	Aceita um argumento adicional no argumento.
+
+	(d) execvp()?
+	Recebe o nome do ficheiro executável.	
+
+	(e) execve()?
+	Passam para o programa a variável ambiente.
+
+	(f) execle()?
+	Passam para o programa a variável ambiente.
+
+
+
+
+
