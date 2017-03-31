@@ -1,0 +1,68 @@
+Universidade de Brasília
+Aluno: Douglas da Silveira Alves	Matricula: 130024881
+Data: 30/03/17
+
+
+
+			Atividade Teórica - Aula 7
+
+
+1. Quantos pipes serão criados após as linhas de código a seguir? Por quê?
+	(a) int pid;
+		int	fd[2];
+		pipe(fd);
+		pid = fork();
+
+	Será criada apena 1 pipe cuja será utilizada para os processos pai e filho. Isso ocorre em virtude da posição em que a pipe foi criada, visto que esta foi criada antes da inicialização do processo filho.
+
+
+	(b) int pid;
+		int	fd[2];
+		pid = fork();
+		pipe(fd);
+	
+	Serão criadas 2 pipes, uma para o processo pai e outra para o processo filho. Isso porque a pipe foi criada no processo filho, logo caso seja necessário o processo pai acessar o filho, será preciso criar outra pipe.
+
+
+
+2. Apresente mais cinco sinais importantes do ambiente Unix, além do SIGSEGV, SIGUSR1, SIGUSR2, SIGALRM e SIGINT. Quais são suas características e utilidades?
+
+SIGQUIT: utilizado para abandonar o programa quando o usuário fechar o terminal (QUIT ou CRTL+D);
+
+SIGILL: sinal para identificar quando uma função ilegal é detectada;
+
+SIGBUS: emitido em caso de erro sobre o barramento;
+
+SIGSYS: quando o argumento incorreto de uma chamada de sistema;
+
+SIGCLD: qunado ocorre a morte de um filho, o pai  recebe uma notificação.
+
+
+
+3. Considere o código a seguir:
+
+	 1. #include <signal.h>
+	 2. #include <unistd.h>
+	 3. #include <stdio.h>
+	 4. #include <stdlib.h>
+	 5.
+	 6. void tratamento_alarme(int sig)
+	 7. {
+	 8. 	system("date");
+	 9. 	alarm(1);
+	10. }
+	11. 
+	12. int main()
+	13. {
+	14. 	signal(SIGALRM, tratamento_alarme);
+	15. 	alarm(1);
+	16. 	printf("Aperte CTRL+C para acabar:\n");
+	17. 	while(1);
+	18. 	return 0;
+	19. }
+
+	Sabendo que a função alarm() tem como entrada a 	quantidade de segundos para terminar a contagem, quão precisos são os alarmes criados neste código? De onde vem a imprecisão? Este é um método confiável para desenvolver aplicações em tempo real?
+
+Neste código, os intervalos são contados em segundos, assim como observa-se na descrição da função. Sim, visto que a função foi desenvolvida para realizar a contagem em segundos de determinados intervalos de tempo.
+
+
