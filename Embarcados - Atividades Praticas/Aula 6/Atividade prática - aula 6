@@ -101,6 +101,246 @@ int main(int argc, char *argv[]){
 }
 
 
+3. Crie um código em C que recebe o nome de diversos comandos pelos argumentos de entrada (argc e *argv[]), e executa cada um usando fork() e exec().
+
+-->Código:
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+
+int func(char *comand, char **arg_list){
+
+	pid_t child_pid;
+	child_pid= fork();
+	
+	if(child_pid != 0){
+	
+	return child_pid;	
+	}
+	else{
+	execvp (comand, arg_list);
+	fprintf(stderr, "Ocorreu um erro de execução \n");
+	abort();
+	
+	}	
+	
+}
+
+int main(int argc, char *argv[]){
+
+	char string[100];
+	char str[100];	
+	int i;
+		
+
+	for(i=1; i< argc; i++){
+		//strcat(string, "\"");
+		strcat(string, argv[i]);
+		//strcat(string, "\"");
+
+
+		printf("%s\n", string);	
+		
+	}
+
+	strcat(str, argv[1]);
+	
+	func (str, argv);
+
+	printf("OK\n");
+
+	return 0;
+}
+
+
+
+
+4. Crie um código em C que gera três processos-filho usando o fork(), e que cada processo-filho chama a seguinte função uma vez:
+
+	int v_global = 0; // Variavel global para este exemplo
+	void Incrementa_Variavel_Global(pid_t id_atual)
+	{
+		v_global++;
+		printf("ID do processo que executou esta funcao = %d\n", id_atual);
+		printf("v_global = %d\n", v_global);
+	}
+
+(Repare que a função Incrementa_Variavel_Global() recebe como entrada o ID do processo que a chamou.)
+Responda: a variável global 'v_global' foi compartilhada por todos os processos-filho, ou cada processo enxergou um valor diferente para esta variável?
+
+
+
+
+--> Código:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+
+
+int v_global = 0; 
+
+void Incrementa_Variavel_Global(pid_t id_atual){
+	
+	v_global ++;
+	printf("ID do processo que executou esta função = %d \n", id_atual);
+	printf("V_GLOBAL = %d \n", v_global);
+	
+	
+}
+
+
+int main (){
+
+	int i, status;
+	int pid;
+	pid_t child1;
+	pid_t child2;
+	pid_t child3;
+	
+	child1= fork();
+	
+	if(child1== 0){
+	
+	printf("Eu sou primeiro processo filho e meu ID eh %d \n", (int)getpid());
+	Incrementa_Variavel_Global( (int)getpid());
+	_exit(EXIT_SUCCESS);	
+	}	
+
+	else if (child1 < 0){
+	perror("fork");
+	exit(EXIT_FAILURE);
+	}
+	
+	child2= fork();
+	if (child2 == 0){
+	printf("Eu sou o segundo processo filho e meu ID eh %d \n", (int)getpid());
+	Incrementa_Variavel_Global( (int)getpid());
+	_exit(EXIT_SUCCESS);
+		
+	}
+	
+	else if(child2 < 0){
+	perror("fork");
+	exit(EXIT_FAILURE);
+	}
+
+
+	child3= fork();
+	if (child3 == 0){
+	printf("Eu sou o terceiro processo filho e meu ID eh %d \n", (int)getpid());
+	Incrementa_Variavel_Global( (int)getpid());
+	_exit(EXIT_SUCCESS);
+	}
+	
+	else if(child3 < 0);{
+	perror("fork");
+	exit(EXIT_FAILURE);
+	exit(0);
+	}
+
+	
+	printf("Os processos filhos terminaram. Sou o processo pai.Id=%d .\n",(int)getpid());	
+	
+	
+	}
+
+
+A variável global foi compartilhada por todos os processos filhos.
+
+
+
+
+5. Repita a questão anterior, mas desta vez faça com que o processo-pai também chame a função Incrementa_Variavel_Global().
+Responda: a variável global 'v_global' foi compartilhada por todos os processos-filho e o processo-pai, ou cada processo enxergou um valor diferente para esta variável?
+
+--Código:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <sys/types.h>
+
+
+int v_global = 0; 
+
+void Incrementa_Variavel_Global(pid_t id_atual){
+	
+	v_global ++;
+	printf("ID do processo que executou esta função = %d \n", id_atual);
+	printf("V_GLOBAL = %d \n", v_global);
+	
+	
+}
+
+
+int main (){
+
+	int i, status;
+	int pid;
+	pid_t child1;
+	pid_t child2;
+	pid_t child3;
+	
+		
+	printf("Sou o processo pai.Id=%d .\n",(int)getpid());
+	Incrementa_Variavel_Global( (int)getpid());
+	printf("Agora meus filhos retornaram a função \n");	
+
+
+	child1= fork();
+	
+	if(child1== 0){
+	
+	printf("Eu sou primeiro processo filho e meu ID eh %d \n", (int)getpid());
+	Incrementa_Variavel_Global( (int)getpid());
+	_exit(EXIT_SUCCESS);	
+	}	
+
+	else if (child1 < 0){
+	perror("fork");
+	exit(EXIT_FAILURE);
+	}
+	
+	child2= fork();
+	if (child2 == 0){
+	printf("Eu sou o segundo processo filho e meu ID eh %d \n", (int)getpid());
+	Incrementa_Variavel_Global( (int)getpid());
+	_exit(EXIT_SUCCESS);
+		
+	}
+	
+	else if(child2 < 0){
+	perror("fork");
+	exit(EXIT_FAILURE);
+	}
+
+
+	child3= fork();
+	if (child3 == 0){
+	printf("Eu sou o terceiro processo filho e meu ID eh %d \n", (int)getpid());
+	Incrementa_Variavel_Global( (int)getpid());
+	_exit(EXIT_SUCCESS);
+	}
+	
+	else if(child3 < 0);{
+	perror("fork");
+	exit(EXIT_FAILURE);
+
+	}
+		
+	}
+
+
+A variável foi compartilhada por todos os processos filho e processo pai.
 
 
 
