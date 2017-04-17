@@ -1,0 +1,179 @@
+Aluno: Douglas da Silveira Alves 	Matrícula: 13/0024881
+Data: 06/04/17
+
+
+		Atividade Prática - Aula 9
+
+
+
+1. Crie um programa em C que preenche matrizes 'long int A[60][60]' e 'long int B[60][60]' completamente com valores aleatórios (use a função random()), e que calcula a soma das duas matrizes por dois métodos:
+	(a) De forma sequencial;
+	(b) De forma paralela.
+Ao final do programa principal, compare os resultados obtidos pelos dois métodos.
+
+
+a)-->Código:
+
+#include<stdio.h>
+#include<stdlib.h>
+
+int main(){
+
+	int i, t, somaA=0, somaB=0;
+	long int A[3][3];
+	long int B[3][3];
+	long int SOMA[3][3];
+	
+	/////Matrix A
+	for(i=0; i<3; i++){
+		for(t=0; t<3;t++){
+			A[i][t]= rand() % 100;
+			printf("%ld\t", A[i][t]);
+				
+		
+		}
+		printf("\n");
+	}	
+
+	printf("\n");
+
+	////Matrix B
+	for(i=0; i<3; i++){
+		for(t=0; t<3;t++){
+			B[i][t]= rand() % 100;
+			printf("%ld\t", B[i][t]);
+				
+		
+		}
+		printf("\n");
+
+	}	
+
+	printf("\n");
+	////Soma
+	for(i=0; i<3; i++){
+		for(t=0; t<3;t++){
+			SOMA[i][t]=A[i][t]+B[i][t];
+			
+			printf("%ld\t", SOMA[i][t]);
+				
+		
+		}
+		printf("\n");
+
+	}	
+
+
+
+
+	return 0;
+}
+
+
+
+b)--> Código:
+
+
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+
+volatile int vA[9];
+volatile int vB=0;
+volatile int Soma[3][3];
+static pthread_mutex_t mutexLock;
+
+void* MatrixA(void* c1){
+	int i;
+	int val[9];
+	int num1= *(int *) c1;
+	for(i=0; i<10;i++){
+		val[i]=num1;
+		printf("%d\n", val[i]);
+		sleep(11);
+		vA[i]=val[i];
+	}
+
+	return NULL;
+}
+
+void* MatrixB (void* c)
+{
+	int num= *(int *) c;
+	int A,B;
+	vB=num;
+	
+	B=vB;
+	
+	int i,j;
+	
+	for(i=0;i<3;i++){
+		for(j=0;j<3;j++){
+	//		Soma[i][j]=A+B;
+		}
+	}
+	
+	
+	return NULL;
+}
+int main ()
+{
+	pthread_t thread_id1;
+	pthread_t thread_id2;
+	
+	long int A[3][3];
+	long int B[3][3];
+	int i,t, res;
+
+	////////////Mutex para sincronizar as Threads:
+	res= pthread_mutex_init(&mutexLock,NULL);
+	//srand(time(NULL));
+
+	
+	////MATRIX A
+	for(i=0; i<3; i++){
+		for(t=0;t<3;t++){
+			A[i][t]= rand() % 100;
+			printf("%ld\t", A[i][t]);
+			pthread_create (&thread_id1, NULL, &MatrixA, (void *)&A[i][t]);	
+			sleep(1);
+		}
+	printf("\n");
+	}
+	printf("\n");
+
+
+	////MATRIX B
+	for(i=0; i<3; i++){
+		for(t=0;t<3;t++){
+			B[i][t]= rand() % 100;
+			printf("%ld\t", B[i][t]);
+			pthread_create (&thread_id2, NULL, &MatrixB, (void *)&B[i][t]);	
+			sleep(1);
+		}
+	printf("\n");
+	}
+	printf("\n");
+
+	
+	pthread_join(thread_id1,NULL);
+	pthread_join(thread_id2,NULL);
+	pthread_mutex_destroy(&mutexLock);
+
+	//printf("%d\n", vA);
+	//printf("%d\n", vB);
+	
+	printf("\n");
+	////Matrix da soma:
+	for(i=0;i<9;i++){
+		printf("%d\n",vA[i]);
+	}
+	
+	
+	//system("pause");
+
+	return 0;
+}
+
