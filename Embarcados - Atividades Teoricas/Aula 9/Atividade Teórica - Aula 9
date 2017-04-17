@@ -1,0 +1,39 @@
+Aluno: Douglas da Silveira Alves 	Matrícula: 13/0024881
+Data: 06/04/17
+
+
+		Atividade Teórica - Aula 9
+
+1. Apresente as características e utilidades das seguintes funções:
+	(a) popen()
+	(b) pclose()
+	(c) fileno()
+
+a)Pipe Stream de um processo para um outro, ou seja, executa um novo fork() para abrir outro processo no lugar do processo filho.
+É composta pela estrutura:
+FILE *popen (const char *command, const char *type);
+onde: FILE é um ponteiro de stream aberto; command é uma string com nome ninário a ser executada e type pipe para leitura"r" ou escrita "w";
+
+b)Fecha o Pipe stream de um processo para outro
+É formada pela estrutura:
+		int pclose(FILE *stream);
+Onde:
+FIEL* stream é o ponteiro para a stream aberta;
+
+c)Retorna o número do descritor do arquivo;
+Composta por:
+
+int filene (FILE *stream);
+
+
+
+2. Quais são as vantagens e desvantagens em utilizar:
+	(a) popen()?
+	(b) exec()?
+
+a)Possui a vantagem de encerra o processo filho atual e inicializar um novo processo;
+
+b) Executa linha de comando do código para o terminal. Pode possuir erros de execução do comando;
+
+
+
