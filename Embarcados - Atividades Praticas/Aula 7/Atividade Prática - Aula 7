@@ -1,0 +1,386 @@
+Aluno: Douglas da Silveira Alves 	Matrícula: 13/0024881
+Data: 30/03/17
+
+		Atividade Prática - Aula 7
+
+
+1. Crie um programa em C que cria um processo-filho e um pipe de comunicação. Faça com que o processo-pai envie os valores 1, 2, 3, 4, 5, 6, 7, 8, 9 e 10 para o processo-filho, com intervalos de 1 segundo entre cada envio. Depois de o processo-pai enviar o número 10, ele aguarda 1 segundo e termina a execução. O processo-filho escreve na tela cada valor recebido, e quando ele receber o valor 10, ele termina a execução.
+
+
+-->Código
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <unistd.h> 
+#include <string.h> 
+#include <sys/wait.h>
+
+
+int main() {
+	int pid, /* pid do processo filho */
+	fd[2], /* descritores do pipe */
+	estado; /* estado do processo filho */
+	int contagem[15];
+	/* cria o pipe */
+	if (pipe(fd) < 0)
+	{ printf("erro na criacao do pipe\n"); exit(1);} /* cria o processo */
+	if ((pid = fork()) < 0)
+	{ printf("erro na criacao do processo\n"); exit(1);} /* codigo do filho */
+	if (pid == 0)
+	{
+	if (read(fd[0], contagem, sizeof(contagem)) < 0) printf("erro na leitura\n");
+	else{
+	
+	sleep(1);
+
+	int i;
+	read(fd[0], contagem, sizeof(contagem));
+
+	for(i=1; i<=10;i++){
+	printf("valor lido = %d\n",contagem[i]);
+	if (i==10)
+	exit(0);
+	}
+	
+	exit(0);
+	}
+	}
+	/* codigo do pai */
+
+	int i, t;
+	for(i=1;i<=10; i++){
+	contagem[i]= i;
+	printf("Estou escrevendo o numero: %d.\n",contagem[i]);	
+	sleep (1);
+	}
+	write(fd[1], contagem, sizeof(contagem));
+
+	
+	if (write(fd[1], contagem, sizeof(contagem)) < 0){
+	printf("erro na escrita\n"); 
+	exit(0);}
+	
+	wait (&estado);
+	exit(0);	
+}
+
+-->Código no terminal:
+
+gcc q1.c -o teste1
+./teste1
+
+
+
+2. Crie um programa em C que cria um processo-filho e um pipe de comunicação. Utilize o pipe para executar a seguinte conversa entre processos:
+
+	FILHO: Pai, qual é a verdadeira essência da sabedoria?
+	PAI: Não façais nada violento, praticai somente aquilo que é justo e equilibrado.
+	FILHO: Mas até uma criança de três anos sabe disso!
+	PAI: Sim, mas é uma coisa difícil de ser praticada até mesmo por um velho como eu...
+
+Neste exercício, quem recebe a mensagem via pipe é quem as escreve no terminal.
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <unistd.h> 
+#include <string.h> 
+#include <sys/wait.h>
+
+
+int main() {
+	int pid, /* pid do processo filho */
+	fd1[2], /* descritores do pipe */
+	fd2[2], /* descritores do pipe */
+	estado; /* estado do processo filho */
+
+	char pergunta_filho1[70]="Pai, qual é a verdadeira essência da sabedoria?";
+	char resposta_pai1[80]="Não façais nada violento, praticai somente aquilo que é justo e equilibrado";
+	char pergunta_filho2[70]="Mas até uma criança de três anos sabe disso";
+	char resposta_pai2[85]="Sim, mas é uma coisa difícil de ser praticada até mesmo por um velho como eu ...";
+	
+	/* cria a primeira pipe */
+	if (pipe(fd1) < 0)
+	{ printf("erro na criacao da primeira pipe\n"); exit(1);} 
+	/* cria a segunda pipe */
+	if (pipe(fd2) < 0)
+	{ printf("erro na criacao da segunda pipe\n"); exit(1);} 
+
+
+	/* cria o processo */
+	if ((pid = fork()) < 0)
+	{ printf("erro na criacao do processo\n"); exit(1);} /* codigo do filho */
+	if (pid == 0)
+	{
+		
+	if (write(fd1[1], pergunta_filho1, sizeof(pergunta_filho1)) < 0) 
+	printf("erro na leitura\n");
+	else{
+	
+	sleep(1);
+	read(fd2[0], resposta_pai1, sizeof(resposta_pai1));
+	printf("%s\n", resposta_pai1);
+	
+	write(fd1[1], pergunta_filho2, sizeof(pergunta_filho2));
+	
+	sleep(2);
+	read(fd2[0], resposta_pai2, sizeof(resposta_pai2));
+	printf("%s\n", resposta_pai2);	
+
+	exit(0);
+	}
+	
+	exit(0);
+	}
+	//}
+
+
+	/* codigo do pai */
+
+	
+	read( fd1[0], pergunta_filho1, sizeof(pergunta_filho1));
+	printf("%s\n", pergunta_filho1);
+
+	write(fd2[1], resposta_pai1, sizeof (resposta_pai1));
+	sleep(2);
+
+	read(fd1[0], pergunta_filho2, sizeof(pergunta_filho2));
+	printf("%s\n", pergunta_filho2);
+
+	write(fd2[1], resposta_pai2, sizeof (resposta_pai2));
+	sleep(1);
+	
+	wait (&estado);
+
+	exit(0);	
+}
+
+
+-->Código para compilar o código:
+gcc q2.c o teste2
+./teste2
+
+
+
+
+3. Crie um programa em C que cria dois processos-filhos e um pipe de comunicação. Utilize o pipe para executar a seguinte conversa entre processos:
+
+	FILHO1: Quando o vento passa, é a bandeira que se move.
+	FILHO2: Não, é o vento que se move.
+	PAI: Os dois se enganam. É a mente dos senhores que se move.
+
+Neste exercício, quem recebe a mensagem via pipe é quem as escreve no terminal.
+
+-->Código:
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <unistd.h> 
+#include <string.h> 
+#include <sys/wait.h>
+
+
+int main() {
+	int pid1, pid2, /* pid's dos processos filho */
+	fd1[2], /* descritores do pipe */
+	fd2[2], /* descritores do pipe */
+	estado; /* estado do processo filho */
+
+	char filho1[70]="Quando o vento passa, é a bandeira que se move.";
+	char filho2[70]="Não, é o vento que se move.";
+	char pai[70]="Os dois se enganaram. É a mente dos senhores que se move.";
+	char pai2[3]=":)";	
+
+	/* cria a primeira pipe */
+	if (pipe(fd1) < 0)
+	{ printf("erro na criacao da primeira pipe\n"); exit(1);} 
+	/* cria a segunda pipe */
+	if (pipe(fd2) < 0)
+	{ printf("erro na criacao da segunda pipe\n"); exit(1);} 
+
+
+	/* cria os processo filho1 */
+	if ((pid1 = fork()) < 0)
+	{ printf("erro na criacao do processo\n"); exit(1);} /* codigo do filho */
+	if (pid1 == 0)
+	{
+		
+	if (write(fd1[1], filho1, sizeof(filho1)) < 0) 
+	printf("erro na leitura\n");
+	else{
+	
+	sleep(1);
+	read(fd1[0], pai, sizeof(pai));
+	printf("%s\n", pai);	
+
+	exit(0);
+	}
+	
+	exit(0);
+	}
+
+/* cria os processo filho2 */
+	if ((pid2 = fork()) < 0)
+	{ printf("erro na criacao do processo\n"); exit(1);} /* codigo do filho */
+	if (pid2 == 0)
+	{
+		
+	if (write(fd2[1], filho2, sizeof(filho2)) < 0) 
+	printf("erro na leitura\n");
+	else{
+	
+	sleep(1);
+	read(fd2[0], pai2, sizeof(pai2));
+	printf("%s\n", pai2);	
+
+	exit(0);
+	}
+	
+	exit(0);
+	}
+
+
+	/* codigo do pai */
+
+	//filho1
+	read( fd1[0], filho1, sizeof(filho1));
+	printf("%s\n", filho1);
+	write(fd1[1], pai, sizeof (pai));
+	sleep(1);
+
+
+	//filho2
+	read( fd2[0], filho2, sizeof(filho2));
+	printf("%s\n", filho2);
+	write(fd2[1], pai2, sizeof (pai2));
+	sleep(1);
+	
+	wait (&estado);
+
+	exit(0);	
+}
+
+
+--> Código para executar o programa:
+
+gcc -c q3.c -o teste3
+./teste3
+
+
+
+4. Crie um programa em C que cria um processo-filho e um pipe de comunicação. O processo-filho deverá pedir o nome do usuário, envia-lo para o pai via pipe, e o pai deverá escrever o nome do usuário no terminal.
+
+--> Código:
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <signal.h>
+#include <unistd.h> 
+#include <string.h> 
+#include <sys/wait.h>
+
+
+int main() {
+	int pid, /* pid do processo filho */
+	fd[2], /* descritores do pipe */
+	estado; /* estado do processo filho */
+	char mensagem[70];
+	char nome[70];
+	
+
+	/* cria o pipe */
+	if (pipe(fd) < 0)
+	{ printf("erro na criacao do pipe\n"); exit(1);} 
+
+	/* cria o processo */
+	if ((pid = fork()) < 0)
+	{ printf("erro na criacao do processo\n"); exit(1);} /* codigo do filho */
+	if (pid == 0)
+	{
+	
+	printf("Digite seu nome:\n");
+	gets( nome);
+
+	int i,t;
+	t=strlen(nome);
+	for(i=0; i<=t; i++){
+	mensagem[i]=nome[i];
+	}
+	strcat(mensagem, " ");
+
+	if (write(fd[1], mensagem, sizeof(mensagem)) < 0) printf("erro na leitura\n");
+	else{
+	
+	sleep(1);
+	write(fd[1], mensagem, sizeof(mensagem));
+	
+	}
+	
+	exit(0);
+	}
+	
+	/* codigo do pai */
+
+	if (read(fd[0], mensagem, sizeof(mensagem)) < 0){
+	printf("erro na leitura\n"); 
+	exit(0);}	
+
+	read(fd[0], mensagem, sizeof(mensagem));
+	printf("O nome digitado é: %s.\n", mensagem);
+
+	wait (&estado);
+	exit(0);	
+}
+
+
+--> Comando para executar o programa:
+
+gcc q4.c -o teste4
+./teste4
+
+
+
+5. Utilize o sinal de alarme para chamar a cada segundo o comando 'ps' ordenando todos os processos de acordo com o uso da CPU. Ou seja, seu código atualizará a lista de processos a cada segundo. Além disso, o código deverá tratar o sinal do CTRL-C, escrevendo "Processo terminado!" na tela antes de terminar a execução do processo.
+
+-->Código Principal
+
+#include <signal.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+
+void tratamento_alarme(int sig)
+{
+	system("ps");
+	// system("date +%s%3N");
+	alarm(1);
+}
+
+void tratamento_saida( int sig){
+	printf("Recpção da interrupção %d: SIGINT.\N",sig);
+	printf("Processo encerrado !!!\n");
+	exit(1);
+}
+
+int main()
+{
+	unsigned sec;
+	signal(SIGALRM, tratamento_alarme);
+	signal(SIGINT, tratamento_saida);
+	sec=alarm(1);
+	printf("Aperte CTRL+C para acabar:\n");
+	while(1);
+	return 0;
+}
+
+
+-->Código para executar o programa;
+
+gcc q5.c -o tste5
+./teste5
+
+
