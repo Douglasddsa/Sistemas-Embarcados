@@ -1,0 +1,80 @@
+Aluno: Douglas da Silveira Alves 	Matrícula: 13/0024881
+Data: 04/04/17
+
+
+		Atividade Teórica - Aula 8
+
+1. Quais são as vantagens e desvantagens em utilizar:
+	(a) fork?
+	(b) threads?
+
+a) Cada processo filho executa determinada tarefa, possuindo espaço protegido em memória, além de utilizar mecanismos de comunicação como pipes,sinais, etc. Tem como desvantagem a criação de processos que ocupam espaço na memória caso não são encerrados de modo correto.
+
+b)Uma única aplicação pode executar várias threads, todas compartilham mesmo espaço na memória, além de possuir comunicação mais simples. Tem como desvantagem o risco de corrupção de dados.
+
+
+2. Quantas threads serão criadas após as linhas de código a seguir? Quantas coexistirão? Por quê?
+	(a)
+		void* funcao_thread_1(void *arg);
+		void* funcao_thread_2(void *arg);
+		
+		int main (int argc, char** argv)
+		{
+			pthread_t t1, t2;
+			pthread_create(&t1, NULL, funcao_thread_1, NULL);
+			pthread_create(&t2, NULL, funcao_thread_2, NULL);
+			pthread_join(t1, NULL);
+			pthread_join(t2, NULL);
+			return 0;
+}
+
+	Existirão 2 threads que coexistirão, porque ambas foram declaradas com identificadores diferentes e a função pthread_join() impede que o processo principal se encerre antes do termino de execução das 2 threads.
+
+
+
+(b)
+		void* funcao_thread_1(void *arg);
+		void* funcao_thread_2(void *arg);
+		
+		int main (int argc, char** argv)
+		{
+			pthread_t t1, t2;
+			pthread_create(&t1, NULL, funcao_thread_1, NULL);
+			pthread_join(t1, NULL);
+			pthread_create(&t2, NULL, funcao_thread_2, NULL);
+			pthread_join(t2, NULL);
+			return 0;
+		}
+
+
+	Existem 2 threads, porém as duas são executadas e finalizadas em momentos diferentes, porque a função pthread_join() foi utilizada em momentos diferentess no código de modo a esperar a primeira thread encerrar para inicializar a segunda.
+
+
+3. Apresente as características e utilidades das seguintes funções:
+	(a) pthread_setcancelstate()
+	(b) pthread_setcanceltype()
+
+
+a)Função utilizada para liberar ou impedir pedidos de cancelamento de threads. Retorna 0 caso a chamada seja realizada com sucesso.
+ex:
+int ret, oldstate;
+
+ret = pthread_setcancelstate (PTHREAD_CANCEL_ENABLE, &oldstate);
+ret = pthread_setcancelstate (PTHREAD_CANCEL_DISABLE, &oldstate);
+
+
+b)Função utilizada para cancelamento de threads assícronas ou deferidas.  Retorna 0 caso a chamada seja realizada com sucesso.
+ex:
+
+int ret, oldtype;
+
+ret = pthread_setcanceltype (PTHREAD_CANCEL_DEFERRED, &oldtype);
+ret = pthread_setcanceltype (PTHREAD_CANCEL_ASYNCHRONOUS, &oldtype);
+
+
+
+
+
+
+
+
