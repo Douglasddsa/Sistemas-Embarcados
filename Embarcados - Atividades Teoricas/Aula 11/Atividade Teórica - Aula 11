@@ -1,0 +1,59 @@
+Aluno:Douglas da Silveira Alves		Matrícula: 13/0024881
+Data:13/04/17
+
+		Atividade Teórica - Aula 11
+
+1. Especifique algumas portas importantes pré-definidas para o protocolo TCP/IP.
+
+As principais portas são:
+:: 21 - FTP;
+:: 23 - Telnet;
+:: 25 - SMTP;
+:: 80 - HTTP;
+:: 110 - POP3;
+:: 143 - IMAP;
+:: 443 - HTTPS.
+
+
+
+2. Com relação a endereços IP, responda:
+	(a) Qual é a diferença entre endereços IP externos e locais?
+	(b) Como endereços IP externos são definidos? Quem os define?
+	(c) Como endereços IP locais são definidos? Quem os define?
+	(d) O que é o DNS? Para que ele serve?
+
+a)O ip interno define uma rede local LAN, já o externo é o endereço visto na WAN da internet.
+
+b)Os ip's externos são definidos pelo host de uma rede externa pelo próprio proprietário do host.
+
+c) O ip local é definido pelo Sistema Operacional através do host na rede interna.
+
+d) Domain Name System (DNS) relaciona o endereço nominal de um site (www.google.com.br) com o endereço real onde a página está na rede.
+
+
+
+3. Com relação à pilha de protocolos TCP/IP, responda:
+	(a) O que são suas camadas? Para que servem?
+	(b) Quais são as camadas existentes? Para que servem?
+	(c) Quais camadas são utilizadas pela biblioteca de sockets?
+	(d) As portas usadas por servidores na função bind() se referem a qual camada?
+	(e) Os endereços usados por clientes na função connect() se referem a qual camada?
+
+
+a) São protocolos de comunicação que interagem para a execução de tarefas.
+
+b)São as camadas de aplicação, de transporte, de rede e de interface.A de aplicação envia e recebe informação de outros programas através da rede. A de transporte recebe e envia os dados para o grupo abaixo, vericar a integridade e divide em pacotes. A de interface recebe e envia os pacotes pela rede.
+
+c)Camada de aplicação e de transporte.
+
+d)Transporte;
+
+e)Aplicação;
+
+
+4. Qual é a diferença entre os métodos GET e POST no protocolo HTTP?
+
+get -> recupera o recurso do servidor;
+post -> cria um recurso no servidor;
+
+
