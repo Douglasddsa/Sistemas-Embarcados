@@ -1,0 +1,36 @@
+Aluno:Douglas da Silveira Alves		Matrícula: 13/0024881
+Data:11/04/17
+
+		Atividade Teórica - Aula 10
+
+1. Com relação ao modelo cliente-servidor, responda:
+	(a) Quais são as características básicas deste modelo?
+	(b) Quais são as características básicas do servidor?
+	(c) Quais são as características básicas do cliente?
+
+a)Servidor espera cliente enviar dados, cujos serão processados e dependendo do seu tipo, retorna a informação para o cliente.
+
+b)O servidor tem como características básicas criar um socket; atribuir este socket à um endereço (por meio da função bind()); configura o socket para aceitar conexões (por meio da função listen()); aceita uma conexão e cria outro socket específico para conexão (por meio da função accept()); realiza o recebimento(recv) e envio (send) de dados com o cliente e, ao terminar sua execução, destroi a socket.
+
+c)O cliente cria um socket, cujo será utilizado para realizar a conexão com o servidor (por meio da função connect()); realizará o envio(send) e o recebimento(recv) de dados com o servidor e finalizará a socket
+
+
+
+2.  Com relação ao protocolo de comunicação da internet, responda:
+	(a) O que são protocolos de comunicação?
+	(b) Quais são as características básicas de protocolos de 		comunicação?
+
+a)São padrões internacional para promover o envio e recibemento de dados.
+
+b)id de identificação do cliente e do servidor, porta de acesso do servidor, quantidade de clientes na fila de um servidor, endereço de um servidor; criação de conexões do cliente com o servidor.
+
+
+
+3. Com relação ao protocolo TCP, responda:
+	(a) O que são portas no protocolo TCP?
+	(b) Para que servem estas portas?
+
+a)São identificadores de 16 bits para aplicação e processos de modo a manter um única conexão entre o computador e outras camadas de dados.
+
+b)Serve para facilitar a execução de multiplos processos.
+
