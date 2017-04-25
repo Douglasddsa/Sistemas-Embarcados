@@ -1,0 +1,26 @@
+﻿Aluno: Douglas da Silveira Alves		Matrícula: 13/0024881
+
+Data:20/04/2017
+					
+
+		Atividade Teórica - Aula 13
+
+
+
+
+
+1. Defina qual modelo de Raspberry Pi você utilizará no projeto desta disciplina com o Raspberry Pi. Justifique sua escolha.
+Será utilizado a raspberry pi 3 model B em virtude da inclusão wireless, wifi e bluetooth, onde será utilizado conexão com a internet para enviar a foto e a localização da pessoa que está tentando roubar/furtar o veículo.
+
+2. Defina qual sistema operacional você utilizará no projeto desta disciplina com o Raspberry Pi. Justifique sua escolha.
+Será utilizado o Raspbian por ser ideal para os inciantes em programação linux, além de possuir os programas padróes de escritório, acesso à internet e várias ferramentas de configuração do computador.
+
+3. Defina de qual forma você instalará o sistema operacional escolhido. Escreva o passo-a-passo da instalação e forneça os links necessários para isto.
+Será utilizado o SD Formatter para formatão o cartão SD (http://www.superdownloads.com.br/download/163/sd-formatter/). o raspbian será baixado no site ofical da Raspberry (www.raspberrypi.org)
+por meio do arquivo zip Noobs. Esse arquivo será descompactado e colocado no cartão de memória. O dispositivos periféricos como teclado, mouse e display serão conectados a rasp e após será ligada a fonte de alimentação. 
+Após ligada, será escolhido o sistema oprecional raspbian e este será instalado e configurado para funcionar com interfac gráfica e outras opções.
+
+4. Defina de qual forma você desenvolverá software para o Raspberry Pi no projeto desta disciplina. Escreva o passo-a-passo do desenvolvimento e forneça os links necessários para isto.
+Os softwares serão desenvolvidos via SSH utilizando o programa Putty para configurar o endereço de ip do computador com a raspberry. Segue em anexo o link para configuração da raspberry via ssh:
+https://pplware.sapo.pt/gadgets/high-tech/tutorial-raspberry-pi-como-aceder-lhe-remotamente/
+https://pplware.sapo.pt/informacao/depois-de-4-anos-chegou-o-putty-0-61/
