@@ -1,0 +1,52 @@
+﻿Aluno: Douglas da Silveira Alves		Matrícula: 13/0024881
+Data:20/04/2017					
+
+		Atividade Teórica - Aula 13
+
+
+
+1. Apresente 5 sistemas operacionais suportados pelo Raspberry Pi, e algumas de suas características.
+
+
+São suportados os sistemas Raspbian, Ubunto, Osmc, Recalbox, Pidora.
+	
+A raspbian é uma versão do Debian muito utilizada para quem está iniciando a utilização da rasp. Possui softwares completos de escritório, permite navegação na internet e possui uma grande quantidade de ferramentas de configuração de computador.
+
+
+	O ubuntu é a distribuição do linux mais utilizada e trata-se de uma edição mais leve. O usuário ganha acesso com aplicativos como o LibreOffice, aleḿ de possuir apps tradicionais e repositórios da Canonical.
+
+
+	O Osmc trata-se de um sistema operacional que torna o rasp uma midia center completo. 
+
+	Já o Recalbox transforma o raspberry uma central de emulação de video games antigos.
+	
+	Já a Pidora promove a utilização de comandos presentes na Red Hat, além de acesso a internet, suíte de escritório e apps em geral encontrados no Ubuntu.
+
+
+
+
+
+2. Apresente as formas de instalação de sistemas operacionais para o Raspberry Pi.
+
+
+Para instalar o sistema operacional na raspbery, é necessário utilizar um mouse usb, teclado usb, uma fonte de alimentação de 5V/2A com conexão micro usb, um monitor de vídeo com entrada HDMI ou DVI, um cartão de memória com pelo menos 
+8Gb e um computador com entrada para cartão de memória. O sistema operacional pode ser gravado no próprio cartão de memória. Antes, é necessário que o carão SD seja formatado, para então gravar o sistema desejado.Para instalar, basta conectar o cartão de memória, teclado, mouse e monitor na raspberry e 
+ligar a fonte de alimentação. Com relação ao sistema desejado, seleciona-se e este será instalado e será configurado pelo usuário
+para possuir interface gráfica ou por linha de comando. Finalizado a configuração, a raspberry estará a disposição para uso.
+
+3. Apresente 3 formas de desenvolvimento de software para o Raspberry Pi.
+Pode-se desenvolver softwares na raspberry de modo remoto, via ssh ou interface gráfica do Pi ou programar diretamente na raspberry.
+Para programar vis SSH(Secure Socket Shell) basta ativar a opção SSH no RaspianOS e utilizar no computador, deve-se indicar o endereço de Ip e a porta de comunicação entre PC e a rasp. Feito isso, basta digitar o usuário e a senha para programar.
+
+Para acessar por meio de interface gráfica, necessita-se instalar um programa com acesso remoto, com suporte a Pi. Feito a instalação e configuração dos endereços de ip do computador com a rasp.
+Já para programar direto na rasp, é necessário utilizar o mouse, o teclado e o monitor para abrir a interface gráfica para programar.
+
+
+5. Apresente as formas possíveis de compilação de código em C para o Raspberry Pi.
+Para compilar em C um código na raspberry, tanto nos 3 modods de desenvolvimento, é necessário instalar a bibliotecaa wiringPi.h
+e  compila-lo usando o comando linux gcc -o xxxxx.c e para executar o arquivo, usar o comando ./xxxxx.c
+
+6. Apresente as formas possíveis de compilação de código em Python para o Raspberry Pi.
+
+Para escrever um programa Pynthon na raspbery, precisa-se criar o progrma com a extensão .py . Feito isso, escreve-se as linhas de código e
+compila-e usando o comando ./xxxxx.py
